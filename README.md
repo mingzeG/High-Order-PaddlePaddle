@@ -1,0 +1,1 @@
+This is a repository for MPNCOV(Matrix Power Normalization) method, which is implemented in PaddlePaddle.
