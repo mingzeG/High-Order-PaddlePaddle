@@ -17,7 +17,6 @@ class ConvBNReLU(nn.Sequential):
             nn.ReLU6()
         )
 
-
 class InvertedResidual(nn.Layer):
     def __init__(self, inp, oup, stride, expand_ratio):
         super(InvertedResidual, self).__init__()
