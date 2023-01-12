@@ -22,5 +22,5 @@ This is a PaddlePaddle implementation of CVPR2020 paper ([What Deep CNNs Benefit
 ## Training usage
 In this repository we just provided the code of MPNCOV method and some classical CNN architectures that use this method. If you want to train or eval our method, pleade follow the usage of  [PaddleClas](https://github.com/PaddlePaddle/PaddleClas), an image classification and image recognition toolset provided by PaddlePaddle Official.
 
-## Config settting
+## Config setting
 We also provide the parameter files for training, which are later needed in paddleclas. You can find in thd directory of src/config. By adding our model and config file to PaddleClas, you can easily reproduce our result.
