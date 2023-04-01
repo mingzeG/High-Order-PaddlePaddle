@@ -1,5 +1,5 @@
 # High-Order-PaddlePaddle
-This is a repo for PaddlePaddle implementation of High-Order, mainly consisting of following works:
+This is a repo for PaddlePaddle implementation of Deep High-Order Pooling Neural Networks, mainly consisting of following works:
 
 CVPR2020 paper ([What Deep CNNs Benefit from Global Covariance Pooling: An Optimization Perspective](https://arxiv.org/abs/2003.11241)([poster](https://github.com/ZhangLi-CS/GCP_Optimization/blob/master/poster.png)))
 
@@ -54,3 +54,9 @@ conda install paddlepaddle-gpu==2.4.2 cudatoolkit=11.2 -c https://mirrors.tuna.t
 ```
 
 # Acknowledgement
+Our code are built following 
+[GCP_Optimization](https://github.com/ZhangLi-CS/GCP_Optimization),
+[DeepBDC](https://github.com/Fei-Long121/DeepBDC),
+[TCPNet](https://github.com/ZilinGao/Temporal-attentive-Covariance-Pooling-Networks-for-Video-Recognition),
+[DropCov](https://github.com/mingzeG/DropCov)
+, thanks for their excellent work
