@@ -1,6 +1,6 @@
 # DropCov
 
-This is an code implementation of NeurIPS2022 paper ([DropCov: A Simple yet Effective Method for Improving Deep Architectures](https://arxiv.org/) ([poster](https://github.com/))), created by Qilong Wang, Mingze Gao and Zhaolin Zhang.
+This is an code implementation of NeurIPS2022 paper ([DropCov: A Simple yet Effective Method for Improving Deep Architectures](https://arxiv.org/) ([poster](https://github.com/mingzeG/DropCov/blob/main/figures/overview.jpg))), created by Qilong Wang, Mingze Gao and Zhaolin Zhang.
 
 
 ## Introduction
