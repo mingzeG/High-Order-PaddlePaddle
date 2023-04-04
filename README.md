@@ -55,13 +55,13 @@ conda install paddlepaddle-gpu==2.4.2 cudatoolkit=11.2 -c https://mirrors.tuna.t
 # Details
 The detailed instruction about using these methods can be found in following:
 
-The MPN-COV instruction is in [MPNCOV.md](./MPNCOV/README.md).
+The detailed MPN-COV instruction can be found [here](./MPNCOV/README.md).
 
-The DeepBDC instruction is in [DeepBDC.md](./DeepBDC/README.md).
+The detailed DeepBDC instruction can be found [here](./DeepBDC/README.md).
 
-The TCPNet instruction is in [TCPNet.md](./TCPNet/README.md).
+The detailed TCPNet instruction can be found [here](./TCPNet/README.md).
 
-The DropCov instruction is in [DropCov.md](./DropCov/README.md).
+The detailed  DropCov instruction can be found [here](./DropCov/README.md).
 
 # Acknowledgement
 Our code are built following 

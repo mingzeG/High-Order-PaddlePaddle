@@ -5,21 +5,8 @@ Post-normalization plays a key role in deep global covariance pooling (GCP) netw
 ![Poster](figures/overview.jpg)
 
 
-## Usage
-### Environments
-●OS：18.04  
-●CUDA：11.0  
-●Toolkit：PyTorch 1.7\1.8  
-●GPU:GTX 2080Ti\3090Ti  
+## Training usage
+In this repository we just provided the code of Dropcov method and classical CNN architectures (ResNet) that use this method. If you want to train or eval our method, pleade follow the usage of  [PaddleClas](https://github.com/PaddlePaddle/PaddleClas), an image classification and image recognition toolset provided by PaddlePaddle Official.
 
-
-## Citation
-
-```
-@inproceedings{wang2022nips,
-  title={A Simple yet Effective Method for Improving Deep Architectures},
-  author={Qilong Wang and Mingze Gao and Zhaolin Zhang and Jiangtao Xie and Peihua Li and Qinghua Hu},
-  booktitle = {NeurIPS},
-  year={2022}
-}
-```
+## Config setting
+We also provide the parameter files for training, which are later needed in paddleclas. You can find in thd directory of src/config. By adding our model and config file to PaddleClas, you can easily reproduce our result.
