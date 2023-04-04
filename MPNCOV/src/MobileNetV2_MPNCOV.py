@@ -93,10 +93,7 @@ class MobileNetV2_MPNCOV(nn.Layer):
         )
 
         # weight initialization
-        print(dir(self))
         for m in self.state_dict():
-            print(m)
-            assert 0
             if isinstance(m, nn.Conv2D):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out')
                 if m.bias is not None:
