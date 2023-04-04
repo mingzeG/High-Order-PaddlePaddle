@@ -90,7 +90,7 @@ def Triuvec(x):
     y = paddle.to_tensor(temp)
     return y
 
-if __name__ =='__main__':
-    x = paddle.ones(shape=(2,3,224,224))
-    model = BDC()
-    y = model(x)
+# if __name__ =='__main__':
+#     x = paddle.ones(shape=(2,3,224,224))
+#     model = BDC()
+#     y = model(x)
