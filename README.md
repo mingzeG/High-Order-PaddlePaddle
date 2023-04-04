@@ -63,8 +63,9 @@ The detailed TCPNet instruction can be found [here](./TCPNet/README.md).
 
 The detailed  DropCov instruction can be found [here](./DropCov/README.md).
 
+
 # Acknowledgement
-Our code are built following 
+Our code are built following:
 [GCP_Optimization](https://github.com/ZhangLi-CS/GCP_Optimization),
 [DeepBDC](https://github.com/Fei-Long121/DeepBDC),
 [TCPNet](https://github.com/ZilinGao/Temporal-attentive-Covariance-Pooling-Networks-for-Video-Recognition),
