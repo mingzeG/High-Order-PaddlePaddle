@@ -3,7 +3,7 @@ import math
 import paddle
 import paddle.nn.functional as F
 
-from TCP.TCP_module import TCP
+from TCP.TCP_module import *
 
 
 __all__ = ['Res2Net', 'res2net50']
@@ -91,7 +91,7 @@ class ShiftModule(nn.Layer):
         self.fold = self.input_channels // self.fold_div
         self.conv = nn.Conv1D(
             2*self.fold, 2*self.fold,
-            kernel_size=3, padding=1, groups=2, 
+            kernel_size=3, padding=1, groups=2*self.fold, 
             bias_attr=False)
         # weight_size: (2*self.fold, 1, 3)
         if mode == 'shift':
@@ -119,7 +119,9 @@ class ShiftModule(nn.Layer):
         x = x.reshape((n_batch, self.n_segment, c, h, w))
         x = x.transpose([0, 3, 4, 2, 1])  # (n_batch, h, w, c, n_segment)
         x = x.reshape((n_batch*h*w, c, self.n_segment))
+
         x = self.conv(x)  # (n_batch*h*w, c, n_segment)
+
         x = x.reshape((n_batch, h, w, c, self.n_segment))
         x = x.transpose([0, 4, 3, 1, 2])  # (n_batch, n_segment, c, h, w)
         x = x.reshape((nt, c, h, w))
@@ -181,14 +183,14 @@ class Bottle2neckShift(nn.Layer):
     def forward(self, x):
         # import pdb; pdb.set_trace()
         residual = x
-
         out = self.conv1(x)
         out = self.bn1(out)
         out = self.relu(out)
 
         out = self.me(out)
 
-        spx = paddle.split(out, self.width, 1)  # 4*(nt, c/4, h, w)
+        spx = paddle.split(out, out.shape[1]//self.width, 1)  # 4*(nt, c/4, h, w)
+
         for i in range(self.nums):
             if i == 0 or self.stype == 'stage':
                 sp = spx[i]
@@ -200,17 +202,17 @@ class Bottle2neckShift(nn.Layer):
             if i == 0:
                 out = sp
             else:
-                out = paddle.cat((out, sp), 1)
+                out = paddle.concat((out, sp), 1)
         last_sp = spx[self.nums]
         last_sp = self.shifts[self.nums](last_sp)
         if self.scale != 1 and self.stype == 'normal':
-            out = paddle.cat((out, last_sp), 1)
+            out = paddle.concat((out, last_sp), 1)
         elif self.scale != 1 and self.stype == 'stage':
             if self.stype =='stage' and spx[-1].shape[1] == 208:
-                out = paddle.cat((out, last_sp), 1)
+                out = paddle.concat((out, last_sp), 1)
                 # print(out.shape)
             else:
-                out = paddle.cat((out, self.pool(last_sp)), 1)
+                out = paddle.concat((out, self.pool(last_sp)), 1)
 
 
         out = self.conv3(out)
@@ -221,7 +223,6 @@ class Bottle2neckShift(nn.Layer):
 
         out += residual
         out = self.relu(out)
-
         return out
 
 class Bottle2neck(nn.Layer):
@@ -241,7 +242,7 @@ class Bottle2neck(nn.Layer):
         super(Bottle2neck, self).__init__()
 
         width = int(math.floor(planes * (baseWidth/64.0)))
-        self.conv1 = nn.Conv2D(inplanes, width*scale, kernel_size=1, bias=False)
+        self.conv1 = nn.Conv2D(inplanes, width*scale, kernel_size=1, bias_attr=False)
         self.bn1 = nn.BatchNorm2D(width*scale)
         
         if scale == 1:
@@ -253,15 +254,15 @@ class Bottle2neck(nn.Layer):
         convs = []
         bns = []
         for i in range(self.nums):
-          convs.append(nn.Conv2D(width, width, kernel_size=3, stride = stride, padding=1, bias=False))
+          convs.append(nn.Conv2D(width, width, kernel_size=3, stride = stride, padding=1, bias_attr=False))
           bns.append(nn.BatchNorm2D(width))
-        self.convs = nn.ModuleList(convs)
-        self.bns = nn.ModuleList(bns)
+        self.convs = nn.ParameterList(convs)
+        self.bns = nn.ParameterList(bns)
 
-        self.conv3 = nn.Conv2D(width*scale, planes * self.expansion, kernel_size=1, bias=False)
+        self.conv3 = nn.Conv2D(width*scale, planes * self.expansion, kernel_size=1, bias_attr=False)
         self.bn3 = nn.BatchNorm2D(planes * self.expansion)
 
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU()
         self.downsample = downsample
         self.stype = stype
         self.scale = scale
@@ -286,11 +287,11 @@ class Bottle2neck(nn.Layer):
           if i==0:
             out = sp
           else:
-            out = paddle.cat((out, sp), 1)
+            out = paddle.concat((out, sp), 1)
         if self.scale != 1 and self.stype=='normal':
-          out = paddle.cat((out, spx[self.nums]),1)
+          out = paddle.concat((out, spx[self.nums]),1)
         elif self.scale != 1 and self.stype=='stage':
-          out = paddle.cat((out, self.pool(spx[self.nums])),1)
+          out = paddle.concat((out, self.pool(spx[self.nums])),1)
 
         out = self.conv3(out)
         out = self.bn3(out)
@@ -300,7 +301,6 @@ class Bottle2neck(nn.Layer):
 
         out += residual
         out = self.relu(out)
-
         return out
 
 class Res2Net(nn.Layer):
@@ -358,7 +358,6 @@ class Res2Net(nn.Layer):
         self.inplanes = planes * block.expansion
         for i in range(1, blocks):
             layers.append(block(self.inplanes, planes, baseWidth = self.baseWidth, scale=self.scale))
-
         return nn.Sequential(*layers)
 
     def forward(self, x):
@@ -371,6 +370,7 @@ class Res2Net(nn.Layer):
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.layer4(x)
+
 
         if self.TCP is not None:
             x = self.TCP(x)
@@ -460,11 +460,3 @@ def res2net50_14w_8s(pretrained=False, **kwargs):
     model = Res2Net(Bottle2neck, [3, 4, 6, 3], baseWidth = 14, scale = 8, **kwargs)
 
     return model
-
-
-
-if __name__ == '__main__':
-    images = paddle.rand(8, 3, 224, 224)
-    model = res2net50_14w_8s(pretrained=True)
-    output = model(images)
-    print(output.size())

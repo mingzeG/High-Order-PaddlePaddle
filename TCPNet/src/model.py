@@ -11,7 +11,7 @@ from TCP.TCP_module import TCP
 
 class TSN(nn.Layer):
     def __init__(self, num_class, num_segments, modality,
-                 base_model='resnet50', new_length=None,
+                 base_model='tea', new_length=None,
                  consensus_type='avg', before_softmax=True,
                  dropout=0.8, img_feature_dim=256,
                  crop_num=1, partial_bn=True, print_spec=True, pretrain='imagenet',
@@ -172,11 +172,6 @@ class TSN(nn.Layer):
             if self.num_segments == 8:
                 from paddlevision.tea50_8f import tea50_8f
                 self.base_model = tea50_8f(
-                    TCP_module=TCP_Layer,
-                )
-            if self.num_segments == 16:
-                from paddlevision.tea50_16f import tea50_16f
-                self.base_model = tea50_16f(
                     TCP_module=TCP_Layer,
                 )
 
@@ -471,6 +466,6 @@ class TSN(nn.Layer):
                                                    GroupRandomHorizontalFlip(is_flow=False)])
 
 if __name__ == '__main__':
-    model = TSN(num_class=10, num_segments=8, modality='RGB')
+    model = TSN(num_class=10, num_segments=8, modality='RGB', TCP=True, TCP_dim=10)
     x = paddle.randn((8, 8, 3, 224, 224))
     y = model(x)
