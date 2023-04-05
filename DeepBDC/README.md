@@ -19,3 +19,14 @@ In this repo, we provide the implementation of the following paper:<br>
     year={2022}
  }
 ```
+
+## Training usage
+In this repository we just provided the code of TCPNet framework. If you want to train or eval our method, pleade follow the usage of  [PaddleVideo](https://github.com/PaddlePaddle/PaddleVideo), a toolset for video tasks prepared for the industry and academia provided by PaddlePaddle Official.
+For example:
+
+```
+DATA_ROOT=/path/mini_imagenet
+
+python pretrain.py --dataset mini_imagenet --data_path $DATA_ROOT --model ResNet12 --method meta_deepbdc --image_size 84 --gpu 0 --lr 5e-2 --t_lr 1e-3 --epoch 170 --milestones 100 150 --save_freq 100 --reduce_dim 640 --dropout_rate 0.8 --val meta --val_n_episode 600
+
+```
