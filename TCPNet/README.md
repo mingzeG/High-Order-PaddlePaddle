@@ -31,3 +31,11 @@ generalization ability.
   year={2021}
 }
   ```
+
+## Training usage
+In this repository we just provided the code of TCPNet framework. If you want to train or eval our method, pleade follow the usage of  [PaddleVideo](https://github.com/PaddlePaddle/PaddleVideo), a toolset for video tasks prepared for the industry and academia provided by PaddlePaddle Official.
+For example:
+
+```
+python -B -m paddle.distributed.launch --gpus="0,1,2,3,4,5,6,7"  --log_dir=log_pptsm  main.py  --validate -c ./config/TCP_frame.yaml
+```
