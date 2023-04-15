@@ -4,6 +4,23 @@
 Post-normalization plays a key role in deep global covariance pooling (GCP) networks. In this paper, we for the first time show that effective post-normalization can make a good trade-off between representation decorrelation and information preservation for GCP, which are crucial to alleviate over-fitting and increase representation ability of deep GCP networks, respectively. Based on this finding, we propose a simple yet effective pre-normalization method for GCP (namely DropCov), which performs an adaptive channel dropout before GCP to achieve tradeoff between representation decorrelation and information preservation. The proposed DropCov improves performance of both deep CNNs and ViTs.
 ![Poster](figures/overview.jpg)
 
+## Pretrained models
+<table>
+  <tr>
+    <th>arch</th>
+    <th>top1</th>
+    <!-- <th>top5</th> -->
+    <!-- <th>log</th> -->
+    <th colspan="6">checkpoint</th>
+  </tr>
+  <tr>
+    <td>ResNet18_ACD</td>
+    <td>73.36%</td>
+    <!-- <td>94.21%</td> -->
+    <!-- <td><a href="https://drive.google.com/file/d/17yKzvJyGBgzRMDvW-KiQbF2G_M2uDnn3/view?usp=share_link">log</a></td> -->
+    <td><a href="https://drive.google.com/file/d/1e-eeZUa40BUMiSN5ASQ5Z37k0Lh54DE7/view?usp=sharing">full ckpt</a></td>
+  </tr>
+<table>
 
 ## Training usage
 In this repository we just provided the code of Dropcov method and classical CNN architectures (ResNet) that use this method. If you want to train or eval our method, pleade follow the usage of  [PaddleClas](https://github.com/PaddlePaddle/PaddleClas), an image classification and image recognition toolset provided by PaddlePaddle Official.
