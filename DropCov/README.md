@@ -20,8 +20,8 @@ Post-normalization plays a key role in deep global covariance pooling (GCP) netw
   </tr>
   <tr>
     <td>ResNet50_ACD</td>
-    <td>75.84%</td>
-    <td><a href="https://drive.google.com/file/d/1e-eeZUa40BUMiSN5ASQ5Z37k0Lh54DE7/view?usp=sharing">full ckpt</a></td>
+    <td>78.26%</td>
+    <td><a href="https://drive.google.com/file/d/1235CUjS7va_h6weWQeAwFZ_J1iOqmaDm/view?usp=sharing">full ckpt</a></td>
   </tr>
 <table>
 
